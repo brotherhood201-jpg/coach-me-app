@@ -1,0 +1,286 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    /* Dark Cinematic Foundation */
+    --bg-canvas: #05070D;
+    --bg-midnight: #08111F;
+    --bg-surface: #0D1B35;
+    --bg-surface-elevated: #112244;
+    
+    /* Sophisticated Liquid Glass (Translucent Dark Surfaces) */
+    --bg-glass-subtle: rgba(8, 17, 31, 0.45);
+    --bg-glass: rgba(8, 17, 31, 0.72);
+    --bg-glass-elevated: rgba(13, 27, 53, 0.85);
+    --bg-glass-modal: rgba(8, 17, 31, 0.92);
+    
+    --border-glass: rgba(255, 255, 255, 0.08);
+    --border-glass-subtle: rgba(255, 255, 255, 0.05);
+    --border-glass-hover: rgba(0, 102, 255, 0.40);
+    --border-glass-active: rgba(10, 132, 255, 0.50);
+    
+    /* Chromatic Lighting Language */
+    --electric-blue: #0066FF;
+    --electric-blue-light: #0A84FF;
+    --deep-navy: #08111F;
+    --navy-surface: #0D1B35;
+    
+    /* Controlled Secondary & Subtle Accents */
+    --chroma-violet: #7C3AED;
+    --chroma-violet-light: #8B5CF6;
+    --accent-magenta: #D946EF;
+    --accent-soft-pink: #F472B6;
+    --warm-coral: #FB7185;
+    
+    /* Legacy variables for backwards compatibility */
+    --accent-purple: #8B5CF6;
+    --accent-violet: #7C3AED;
+    --accent-light: #A855F7;
+    --accent-glow: rgba(0, 102, 255, 0.35);
+  }
+
+  body {
+    background-color: #05070D;
+    color: #f8fafc;
+    font-family: 'Vazirmatn', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+}
+
+/* ==================================================
+   Sophisticated Liquid Glass System
+   - Translucent dark background
+   - Backdrop blur
+   - Very thin subtle border
+   - Soft inner highlight (specular sheen)
+   - Controlled shadow + subtle blue glow
+   ================================================== */
+
+.glass-panel {
+  background: rgba(8, 17, 31, 0.72);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.65), 0 0 25px rgba(0, 102, 255, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.glass-panel-elevated {
+  background: rgba(13, 27, 53, 0.85);
+  backdrop-filter: blur(32px);
+  -webkit-backdrop-filter: blur(32px);
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.80), 0 0 30px rgba(0, 102, 255, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.glass-panel-electric {
+  background: linear-gradient(145deg, rgba(8, 17, 31, 0.88), rgba(13, 27, 53, 0.80));
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  border: 1px solid rgba(0, 102, 255, 0.35);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.70), 0 0 30px rgba(0, 102, 255, 0.20), inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+
+.glass-card {
+  background: rgba(8, 17, 31, 0.70);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.60), 0 0 20px rgba(0, 102, 255, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.10);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card:hover {
+  border-color: rgba(0, 102, 255, 0.38);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.70), 0 0 28px rgba(0, 102, 255, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+.glass-card-accent {
+  background: linear-gradient(150deg, rgba(13, 27, 53, 0.85), rgba(8, 17, 31, 0.90));
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(124, 58, 237, 0.30);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.70), 0 0 25px rgba(124, 58, 237, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+
+.glass-input {
+  background: rgba(8, 17, 31, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  color: #ffffff;
+  transition: all 0.2s ease;
+}
+
+.glass-input:focus {
+  border-color: #0066FF;
+  outline: none;
+  box-shadow: 0 0 20px rgba(0, 102, 255, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+/* ==================================================
+   Gradients & Cinematic Lighting
+   - Blue is the primary lighting language
+   - Purple/magenta are secondary subtle accents
+   ================================================== */
+.bg-gradient-spectrum {
+  background: linear-gradient(135deg, #05070D 0%, #08111F 30%, #0066FF 65%, #7C3AED 85%, #D946EF 100%);
+}
+
+.bg-gradient-electric {
+  background: linear-gradient(135deg, #0055FF 0%, #0066FF 50%, #0A84FF 100%);
+}
+
+.bg-gradient-electric-cyan {
+  background: linear-gradient(135deg, #00D4FF 0%, #0066FF 60%, #0D1B35 100%);
+}
+
+.bg-gradient-violet-magenta {
+  background: linear-gradient(135deg, #7C3AED 0%, #8B5CF6 50%, #D946EF 100%);
+}
+
+.bg-gradient-sunset {
+  background: linear-gradient(135deg, #D946EF 0%, #F472B6 50%, #FB7185 100%);
+}
+
+.text-gradient-electric {
+  background: linear-gradient(135deg, #FFFFFF 0%, #38BDF8 50%, #0066FF 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-magenta {
+  background: linear-gradient(135deg, #C084FC 0%, #F472B6 50%, #FB7185 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-cyan {
+  background: linear-gradient(135deg, #FFFFFF 0%, #38BDF8 60%, #0066FF 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Glow effects */
+.glow-electric {
+  box-shadow: 0 0 28px rgba(0, 102, 255, 0.40);
+}
+
+.glow-blue {
+  box-shadow: 0 0 28px rgba(0, 102, 255, 0.40);
+}
+
+.glow-violet {
+  box-shadow: 0 0 24px rgba(124, 58, 237, 0.35);
+}
+
+.glow-magenta {
+  box-shadow: 0 0 22px rgba(217, 70, 239, 0.35);
+}
+
+.glow-coral {
+  box-shadow: 0 0 20px rgba(251, 113, 133, 0.30);
+}
+
+/* Subtle Specular Sheen for Liquid Glass */
+.sheen-top {
+  position: relative;
+}
+.sheen-top::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.22) 50%, transparent 100%);
+  pointer-events: none;
+}
+
+/* Cinematic Image Vignette & Overlay */
+.cinematic-vignette {
+  background: linear-gradient(180deg, rgba(5, 7, 13, 0.2) 0%, rgba(5, 7, 13, 0.65) 60%, #05070D 100%);
+}
+
+.cinematic-gradient-mask {
+  mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+}
+
+/* Tabular Numerals for Metrics */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ==================================================
+   GLOBAL DOT-MATRIX DIGITAL DISPLAY TYPOGRAPHY
+   Every numeric display in the application relies on
+   this consistent dot-matrix digital typographic engine.
+   ================================================== */
+.font-dot-matrix {
+  font-family: 'Doto', 'DotGothic16', monospace;
+  font-feature-settings: "tnum" 1;
+  font-variant-numeric: tabular-nums;
+  font-variation-settings: 'ROND' 100, 'wght' 600;
+  letter-spacing: 0.05em;
+  direction: ltr;
+  display: inline-block;
+}
+
+.dot-glow-white {
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.45), 0 0 18px rgba(255, 255, 255, 0.2);
+}
+
+.dot-glow-blue,
+.dot-glow-electric {
+  text-shadow: 0 0 8px rgba(56, 189, 248, 0.70), 0 0 20px rgba(0, 102, 255, 0.45);
+}
+
+.dot-glow-cyan {
+  text-shadow: 0 0 8px rgba(56, 189, 248, 0.65), 0 0 20px rgba(0, 102, 255, 0.35);
+}
+
+.dot-glow-violet {
+  text-shadow: 0 0 8px rgba(168, 85, 247, 0.65), 0 0 20px rgba(124, 58, 237, 0.35);
+}
+
+.dot-glow-rose,
+.dot-glow-magenta {
+  text-shadow: 0 0 8px rgba(244, 63, 94, 0.65), 0 0 20px rgba(217, 70, 239, 0.35);
+}
+
+.dot-glow-amber {
+  text-shadow: 0 0 8px rgba(251, 191, 36, 0.65), 0 0 20px rgba(245, 158, 11, 0.35);
+}
+
+.dot-glow-emerald {
+  text-shadow: 0 0 8px rgba(52, 211, 153, 0.65), 0 0 20px rgba(16, 185, 129, 0.35);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(5, 7, 13, 0.6);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 102, 255, 0.45);
+}
+
+/* Safe Area Inset Support for iPhone */
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 24px);
+}
+
+.pt-safe {
+  padding-top: env(safe-area-inset-top, 16px);
+}
+

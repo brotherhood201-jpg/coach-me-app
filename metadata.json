@@ -1,0 +1,6 @@
+{
+  "name": "کوچ من",
+  "description": "سامانه هوشمند بدنسازی و مربیگری کوچ من - پایش تمرین، ثبت رکوردها، برنامه اختصاصی و پیوستگی ورزشی",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,113 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // Role-based admin check: exists in /admins/{uid} or matches bootstrapped admin
+    function isAdmin() {
+      return isAuthenticated() && (
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid)) ||
+        request.auth.token.email == 'brotherhood201@gmail.com'
+      );
+    }
+
+    // User private root & subcollections
+    match /users/{userId} {
+      allow read: if isOwner(userId) || isAdmin();
+      allow write: if isOwner(userId) || isAdmin();
+
+      match /{allSubcollections=**} {
+        allow read: if isOwner(userId) || isAdmin();
+        allow write: if isOwner(userId) || isAdmin();
+      }
+    }
+
+    // Top-level Water Logs and Daily Check-ins
+    match /waterLogs/{userId}/{date} {
+      allow read, write: if isOwner(userId) || isAdmin();
+    }
+
+    match /dailyCheckIns/{userId}/{date} {
+      allow read, write: if isOwner(userId) || isAdmin();
+    }
+
+    // Program Requests for Coach / Client Review (Strictly Private)
+    match /programRequests/{requestId} {
+      allow read: if isAuthenticated() && (resource == null || resource.data.userId == request.auth.uid || isAdmin());
+      allow create: if isAuthenticated() && (request.resource.data.userId == request.auth.uid || isAdmin());
+      allow update: if isAuthenticated() && (resource.data.userId == request.auth.uid || isAdmin());
+      allow delete: if isAdmin();
+    }
+
+    // Admins collection
+    match /admins/{adminId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin() || (isAuthenticated() && request.auth.uid == adminId);
+    }
+
+    // Global Public Read collections (Exercises, Articles, Videos, Workout Programs, Nutrition Foods, Categories, Achievements)
+    match /exercises/{exerciseId} {
+      allow read: if true;
+      allow write: if isAdmin() || isAuthenticated();
+    }
+
+    match /articles/{articleId} {
+      allow read: if true;
+      allow write: if isAdmin() || isAuthenticated();
+    }
+
+    match /videos/{videoId} {
+      allow read: if true;
+      allow write: if isAdmin() || isAuthenticated();
+    }
+
+    match /workoutPrograms/{programId} {
+      allow read: if true;
+      allow write: if isAdmin() || isAuthenticated();
+    }
+
+    match /foods/{foodId} {
+      allow read: if true;
+      allow write: if isAdmin() || isAuthenticated();
+    }
+
+    match /categories/{categoryId} {
+      allow read: if true;
+      allow write: if isAdmin() || isAuthenticated();
+    }
+
+    match /achievements/{achievementId} {
+      allow read: if true;
+      allow write: if isAdmin() || isAuthenticated();
+    }
+
+    match /media/{mediaId} {
+      allow read: if true;
+      allow write: if isAdmin() || isAuthenticated();
+    }
+
+    match /auditLogs/{logId} {
+      allow read: if isAdmin();
+      allow create: if isAuthenticated();
+      allow update, delete: if isAdmin();
+    }
+
+    match /appSettings/{settingId} {
+      allow read: if true;
+      allow write: if isAdmin() || isAuthenticated();
+    }
+
+    match /notifications/{notificationId} {
+      allow read: if true;
+      allow write: if isAdmin() || isAuthenticated();
+    }
+  }
+}

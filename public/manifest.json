@@ -1,0 +1,11 @@
+{
+  "name": "کوچ من",
+  "short_name": "کوچ من",
+  "description": "اپلیکیشن هوشمند بدنسازی و مربیگری کوچ من",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050811",
+  "theme_color": "#050811",
+  "dir": "rtl",
+  "lang": "fa"
+}

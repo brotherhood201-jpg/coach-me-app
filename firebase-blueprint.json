@@ -1,0 +1,490 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile with physical attributes, fitness goals, and training preferences",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "profileImage": { "type": "string" },
+        "age": { "type": "number" },
+        "height": { "type": "number" },
+        "weight": { "type": "number" },
+        "gender": { "type": "string", "enum": ["male", "female", "other"] },
+        "fitnessLevel": { "type": "string", "enum": ["beginner", "intermediate", "advanced"] },
+        "goal": { "type": "string", "enum": ["muscle_gain", "fat_loss", "strength", "maintenance"] },
+        "trainingDaysPerWeek": { "type": "number" },
+        "availableEquipment": { "type": "string" },
+        "streakDays": { "type": "number" },
+        "totalWorkoutsDone": { "type": "number" },
+        "isProfileComplete": { "type": "boolean" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["userId", "name", "email"]
+    },
+    "AdminUser": {
+      "title": "AdminUser",
+      "description": "System administrator user record and permission role",
+      "type": "object",
+      "properties": {
+        "adminId": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "name": { "type": "string" },
+        "role": { "type": "string", "enum": ["superAdmin", "contentAdmin", "moderator"] },
+        "active": { "type": "boolean" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["adminId", "email", "role"]
+    },
+    "Exercise": {
+      "title": "Exercise",
+      "description": "Global exercise item in the exercise library",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "nameFa": { "type": "string" },
+        "nameEn": { "type": "string" },
+        "primaryMuscle": { "type": "string" },
+        "secondaryMuscles": { "type": "string" },
+        "equipment": { "type": "string" },
+        "difficulty": { "type": "string" },
+        "description": { "type": "string" },
+        "instructions": { "type": "string" },
+        "commonMistakes": { "type": "string" },
+        "tips": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "videoUrl": { "type": "string" },
+        "status": { "type": "string", "enum": ["draft", "published", "archived"] },
+        "isActive": { "type": "boolean" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "nameFa", "nameEn", "primaryMuscle"]
+    },
+    "WorkoutProgram": {
+      "title": "WorkoutProgram",
+      "description": "A workout routine or program containing scheduled days",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "goal": { "type": "string" },
+        "difficulty": { "type": "string" },
+        "daysPerWeek": { "type": "number" },
+        "estimatedDuration": { "type": "number" },
+        "coverImage": { "type": "string" },
+        "status": { "type": "string", "enum": ["draft", "published", "archived"] },
+        "days": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "name"]
+    },
+    "WorkoutSession": {
+      "title": "WorkoutSession",
+      "description": "A user-logged workout execution session",
+      "type": "object",
+      "properties": {
+        "sessionId": { "type": "string" },
+        "userId": { "type": "string" },
+        "programId": { "type": "string" },
+        "workoutDayId": { "type": "string" },
+        "titleFa": { "type": "string" },
+        "muscleGroupsFa": { "type": "string" },
+        "startedAt": { "type": "string" },
+        "completedAt": { "type": "string" },
+        "duration": { "type": "number" },
+        "status": { "type": "string", "enum": ["in_progress", "completed", "cancelled"] },
+        "totalVolumeKg": { "type": "number" },
+        "caloriesBurned": { "type": "number" }
+      },
+      "required": ["sessionId", "userId", "startedAt", "status"]
+    },
+    "WorkoutSetRecord": {
+      "title": "WorkoutSetRecord",
+      "description": "An individual set logged inside a workout session",
+      "type": "object",
+      "properties": {
+        "setId": { "type": "string" },
+        "exerciseId": { "type": "string" },
+        "exerciseNameFa": { "type": "string" },
+        "setNumber": { "type": "number" },
+        "weight": { "type": "number" },
+        "reps": { "type": "number" },
+        "rpe": { "type": "number" },
+        "completed": { "type": "boolean" },
+        "timestamp": { "type": "string" },
+        "isPR": { "type": "boolean" }
+      },
+      "required": ["setId", "exerciseId", "setNumber", "completed"]
+    },
+    "PersonalRecord": {
+      "title": "PersonalRecord",
+      "description": "User personal record for a specific exercise",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "exerciseId": { "type": "string" },
+        "exerciseNameFa": { "type": "string" },
+        "maxWeightKg": { "type": "number" },
+        "maxRepsAtWeight": { "type": "number" },
+        "estimated1RM": { "type": "number" },
+        "achievedAt": { "type": "string" }
+      },
+      "required": ["id", "userId", "exerciseId", "maxWeightKg"]
+    },
+    "BodyMeasurement": {
+      "title": "BodyMeasurement",
+      "description": "A log of user bodily measurements over time",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "date": { "type": "string" },
+        "weight": { "type": "number" },
+        "chest": { "type": "number" },
+        "waist": { "type": "number" },
+        "arm": { "type": "number" },
+        "thigh": { "type": "number" },
+        "bodyFatPercentage": { "type": "number" }
+      },
+      "required": ["id", "userId", "date"]
+    },
+    "ProgressPhoto": {
+      "title": "ProgressPhoto",
+      "description": "A progress photo uploaded by the user",
+      "type": "object",
+      "properties": {
+        "photoId": { "type": "string" },
+        "userId": { "type": "string" },
+        "storageUrl": { "type": "string" },
+        "date": { "type": "string" },
+        "category": { "type": "string", "enum": ["front", "side", "back"] }
+      },
+      "required": ["photoId", "userId", "storageUrl", "date", "category"]
+    },
+    "NutritionLog": {
+      "title": "NutritionLog",
+      "description": "Daily nutrition summary for calories and macronutrients",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "date": { "type": "string" },
+        "calories": { "type": "number" },
+        "protein": { "type": "number" },
+        "carbs": { "type": "number" },
+        "fat": { "type": "number" },
+        "water": { "type": "number" }
+      },
+      "required": ["id", "userId", "date"]
+    },
+    "FoodItem": {
+      "title": "FoodItem",
+      "description": "Nutrition database food item",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "nameFa": { "type": "string" },
+        "nameEn": { "type": "string" },
+        "category": { "type": "string" },
+        "calories": { "type": "number" },
+        "protein": { "type": "number" },
+        "carbs": { "type": "number" },
+        "fat": { "type": "number" },
+        "servingSize": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "nameFa", "calories", "protein", "carbs", "fat"]
+    },
+    "ContentCategory": {
+      "title": "ContentCategory",
+      "description": "Taxonomy category for content and exercises",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "nameFa": { "type": "string" },
+        "nameEn": { "type": "string" },
+        "type": { "type": "string", "enum": ["exercise", "article", "video", "nutrition"] },
+        "sortOrder": { "type": "number" },
+        "active": { "type": "boolean" }
+      },
+      "required": ["id", "nameFa", "type"]
+    },
+    "WaterLog": {
+      "title": "WaterLog",
+      "description": "Daily user hydration log",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "date": { "type": "string" },
+        "glasses": { "type": "number" },
+        "targetGlasses": { "type": "number" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["userId", "date", "glasses", "targetGlasses"]
+    },
+    "DailyCheckIn": {
+      "title": "DailyCheckIn",
+      "description": "Daily user habit adherence, workout feeling, and energy check-in",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "date": { "type": "string" },
+        "dietAdherence": { "type": "string", "enum": ["very_low", "medium", "good", "great"] },
+        "dietAdherenceScore": { "type": "number" },
+        "workoutFeeling": { "type": "string" },
+        "energy": { "type": "string", "enum": ["low", "normal", "good", "super"] },
+        "dailyScore": { "type": "number" },
+        "notes": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["userId", "date", "dietAdherence", "energy", "dailyScore"]
+    },
+    "Achievement": {
+      "title": "Achievement",
+      "description": "User earned badges and fitness milestones",
+      "type": "object",
+      "properties": {
+        "achievementId": { "type": "string" },
+        "userId": { "type": "string" },
+        "titleFa": { "type": "string" },
+        "descriptionFa": { "type": "string" },
+        "icon": { "type": "string" },
+        "criteria": { "type": "string" },
+        "active": { "type": "boolean" },
+        "unlockedAt": { "type": "string" }
+      },
+      "required": ["achievementId", "titleFa"]
+    },
+    "Notification": {
+      "title": "Notification",
+      "description": "System or broadcast notification",
+      "type": "object",
+      "properties": {
+        "notificationId": { "type": "string" },
+        "userId": { "type": "string" },
+        "titleFa": { "type": "string" },
+        "bodyFa": { "type": "string" },
+        "type": { "type": "string" },
+        "targetAudience": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "actionUrl": { "type": "string" },
+        "read": { "type": "boolean" },
+        "scheduledFor": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["notificationId", "titleFa"]
+    },
+    "Article": {
+      "title": "Article",
+      "description": "Published fitness article or guide",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "summary": { "type": "string" },
+        "content": { "type": "string" },
+        "category": { "type": "string" },
+        "coverImage": { "type": "string" },
+        "readingTime": { "type": "number" },
+        "status": { "type": "string", "enum": ["draft", "published", "archived"] },
+        "published": { "type": "boolean" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "title", "published"]
+    },
+    "Video": {
+      "title": "Video",
+      "description": "Educational or instructional fitness video",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "category": { "type": "string" },
+        "thumbnailUrl": { "type": "string" },
+        "videoUrl": { "type": "string" },
+        "duration": { "type": "number" },
+        "status": { "type": "string", "enum": ["draft", "published", "archived"] },
+        "published": { "type": "boolean" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "title", "published"]
+    },
+    "MediaItem": {
+      "title": "MediaItem",
+      "description": "Uploaded media library record in Firebase Storage",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "type": { "type": "string", "enum": ["image", "video", "thumbnail"] },
+        "storageUrl": { "type": "string" },
+        "storagePath": { "type": "string" },
+        "sizeBytes": { "type": "number" },
+        "mimeType": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "name", "storageUrl"]
+    },
+    "AuditLog": {
+      "title": "AuditLog",
+      "description": "Administrative actions audit trail",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "adminId": { "type": "string" },
+        "adminEmail": { "type": "string" },
+        "action": { "type": "string" },
+        "entityType": { "type": "string" },
+        "entityId": { "type": "string" },
+        "timestamp": { "type": "string" },
+        "details": { "type": "string" }
+      },
+      "required": ["id", "adminId", "action", "entityType", "timestamp"]
+    },
+    "AppSetting": {
+      "title": "AppSetting",
+      "description": "Global application configuration and maintenance controls",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "maintenanceMode": { "type": "boolean" },
+        "appVersion": { "type": "string" },
+        "announcementFa": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id"]
+    },
+    "ProgramRequest": {
+      "title": "ProgramRequest",
+      "description": "User coaching program request and detailed profile submission for coach review",
+      "type": "object",
+      "properties": {
+        "requestId": { "type": "string" },
+        "userId": { "type": "string" },
+        "userName": { "type": "string" },
+        "userEmail": { "type": "string" },
+        "status": { "type": "string", "enum": ["draft", "submitted", "under_review", "needs_more_info", "approved", "plan_ready", "rejected"] },
+        "specialReviewRequired": { "type": "boolean" },
+        "healthFlag": { "type": "boolean" },
+        "allergyFlag": { "type": "boolean" },
+        "injuryFlag": { "type": "boolean" },
+        "assignedProgramId": { "type": "string" },
+        "coachNotes": { "type": "string" },
+        "submittedAt": { "type": "string" },
+        "updatedAt": { "type": "string" },
+        "publishedAt": { "type": "string" }
+      },
+      "required": ["requestId", "userId", "status", "submittedAt"]
+    }
+  },
+  "firestore": {
+    "/programRequests/{requestId}": {
+      "schema": "ProgramRequest",
+      "description": "Client coaching requests and detailed profile review records"
+    },
+    "/admins/{adminId}": {
+      "schema": "AdminUser",
+      "description": "Admin access control and roles"
+    },
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profile document"
+    },
+    "/users/{userId}/workoutPrograms/{programId}": {
+      "schema": "WorkoutProgram",
+      "description": "User custom or assigned workout programs"
+    },
+    "/users/{userId}/workoutSessions/{sessionId}": {
+      "schema": "WorkoutSession",
+      "description": "Recorded workout sessions for the user"
+    },
+    "/users/{userId}/workoutSessions/{sessionId}/sets/{setId}": {
+      "schema": "WorkoutSetRecord",
+      "description": "Sets performed during a workout session"
+    },
+    "/users/{userId}/personalRecords/{prId}": {
+      "schema": "PersonalRecord",
+      "description": "Personal records achieved by the user"
+    },
+    "/users/{userId}/bodyMeasurements/{measurementId}": {
+      "schema": "BodyMeasurement",
+      "description": "User body measurements log"
+    },
+    "/users/{userId}/progressPhotos/{photoId}": {
+      "schema": "ProgressPhoto",
+      "description": "User progress photos metadata"
+    },
+    "/users/{userId}/nutritionLogs/{logId}": {
+      "schema": "NutritionLog",
+      "description": "User nutrition and macro tracking logs"
+    },
+    "/users/{userId}/achievements/{achievementId}": {
+      "schema": "Achievement",
+      "description": "User unlocked achievements"
+    },
+    "/users/{userId}/notifications/{notificationId}": {
+      "schema": "Notification",
+      "description": "User notifications"
+    },
+    "/exercises/{exerciseId}": {
+      "schema": "Exercise",
+      "description": "Global exercise catalog"
+    },
+    "/articles/{articleId}": {
+      "schema": "Article",
+      "description": "Global fitness articles"
+    },
+    "/videos/{videoId}": {
+      "schema": "Video",
+      "description": "Global instructional videos"
+    },
+    "/workoutPrograms/{programId}": {
+      "schema": "WorkoutProgram",
+      "description": "Global workout templates and programs"
+    },
+    "/foods/{foodId}": {
+      "schema": "FoodItem",
+      "description": "Global nutrition food database"
+    },
+    "/categories/{categoryId}": {
+      "schema": "ContentCategory",
+      "description": "Content taxonomy categories"
+    },
+    "/media/{mediaId}": {
+      "schema": "MediaItem",
+      "description": "Media library records"
+    },
+    "/auditLogs/{logId}": {
+      "schema": "AuditLog",
+      "description": "Admin action audit logs"
+    },
+    "/appSettings/{settingId}": {
+      "schema": "AppSetting",
+      "description": "System settings and maintenance configuration"
+    },
+    "/notifications/{notificationId}": {
+      "schema": "Notification",
+      "description": "Global broadcast notifications"
+    },
+    "/waterLogs/{userId}/{date}": {
+      "schema": "WaterLog",
+      "description": "User daily hydration records"
+    },
+    "/dailyCheckIns/{userId}/{date}": {
+      "schema": "DailyCheckIn",
+      "description": "User daily habit and check-in records"
+    }
+  }
+}
